@@ -6,32 +6,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { User, Mail } from "lucide-react";
+import { FileText, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Survey = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
     waterSource: '',
     waterConcerns: [] as string[],
     desalinationAwareness: '',
     willingness: '',
-    preferredTechnology: ''
+    preferredTechnology: '',
+    message: ''
   });
 
   const waterConcernOptions = [
-    "Water scarcity in my area",
-    "Poor water quality",
-    "High water costs",
-    "Unreliable water supply",
-    "Environmental impact of current water sources",
-    "Lack of water conservation awareness"
+    'Water scarcity',
+    'Poor water quality',
+    'High cost of clean water',
+    'Lack of access to safe drinking water',
+    'Environmental pollution',
+    'Saltwater intrusion',
+    'Groundwater depletion'
   ];
 
   const handleConcernChange = (concern: string, checked: boolean) => {
@@ -48,24 +53,59 @@ const Survey = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
+    
+    if (!formData.name || !formData.email) {
       toast({
-        title: "Survey Submitted Successfully!",
-        description: "Thank you for your valuable feedback. We'll use this to improve our services.",
+        title: "Error",
+        description: "Please fill in your name and email.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    const { error } = await supabase
+      .from('survey_responses')
+      .insert([{
+        user_id: user?.id || null,
+        name: formData.name,
+        email: formData.email,
+        water_source: formData.waterSource,
+        water_concerns: formData.waterConcerns,
+        desalination_awareness: formData.desalinationAwareness,
+        willingness: formData.willingness,
+        preferred_technology: formData.preferredTechnology,
+        message: formData.message
+      }]);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit survey. Please try again.",
+        variant: "destructive"
+      });
+      console.error('Error submitting survey:', error);
+    } else {
+      toast({
+        title: "Survey Submitted!",
+        description: "Thank you for participating in our water sustainability survey.",
       });
       setFormData({
         name: '',
         email: '',
-        message: '',
         waterSource: '',
         waterConcerns: [],
         desalinationAwareness: '',
         willingness: '',
-        preferredTechnology: ''
+        preferredTechnology: '',
+        message: ''
       });
     }
+    
+    setLoading(false);
   };
 
   return (
@@ -73,123 +113,112 @@ const Survey = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4">
+      <section className="pt-24 pb-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
+          <FileText className="w-16 h-16 text-blue-600 mx-auto mb-6" />
           <h1 className="text-5xl font-bold text-gray-800 mb-6 animate-fade-in">
-            Community Survey & Feedback
+            Water Sustainability Survey
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Help us understand your water challenges and improve our solutions. 
-            Your feedback shapes the future of clean water access.
+            Help us understand water challenges in your community. Your responses will guide 
+            our efforts to develop better water solutions and desalination technologies.
           </p>
         </div>
       </section>
 
       {/* Survey Form */}
       <section className="pb-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <Card className="shadow-2xl border-0 overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-8">
-              <CardTitle className="text-3xl font-bold">Water Access Survey</CardTitle>
-              <CardDescription className="text-blue-100 text-lg">
-                Share your experiences and help us build better water solutions
+        <div className="max-w-3xl mx-auto">
+          <Card className="shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-2xl text-gray-800">Share Your Water Story</CardTitle>
+              <CardDescription className="text-lg">
+                Your insights help us build better water solutions for communities across India
               </CardDescription>
             </CardHeader>
-            
-            <CardContent className="p-8">
+            <CardContent>
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Contact Information */}
-                <div className="space-y-6">
-                  <h3 className="text-2xl font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                    Contact Information
-                  </h3>
-                  
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name *</Label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 text-gray-400" size={20} />
-                        <Input
-                          id="name"
-                          placeholder="Enter your full name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          className="pl-10"
-                          required
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address *</Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="Enter your email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="pl-10"
-                          required
-                        />
-                      </div>
-                    </div>
+                {/* Basic Information */}
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Full Name *</Label>
+                    <Input
+                      placeholder="Enter your full name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Email Address *</Label>
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      required
+                    />
                   </div>
                 </div>
 
                 {/* Water Source */}
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                    Water Access Questions
-                  </h3>
-                  
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-gray-700">What is your primary water source?</Label>
-                    <RadioGroup value={formData.waterSource} onValueChange={(value) => setFormData({...formData, waterSource: value})}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="municipal" id="municipal" />
-                        <Label htmlFor="municipal">Municipal water supply</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="well" id="well" />
-                        <Label htmlFor="well">Private well</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="bottled" id="bottled" />
-                        <Label htmlFor="bottled">Bottled water</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="other" id="other" />
-                        <Label htmlFor="other">Other source</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
+                  <Label className="text-base font-semibold">What is your primary source of water?</Label>
+                  <RadioGroup 
+                    value={formData.waterSource} 
+                    onValueChange={(value) => setFormData({...formData, waterSource: value})}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="municipal" id="municipal" />
+                      <Label htmlFor="municipal">Municipal water supply</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="borewell" id="borewell" />
+                      <Label htmlFor="borewell">Borewell/Groundwater</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="well" id="well" />
+                      <Label htmlFor="well">Open well</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="river" id="river" />
+                      <Label htmlFor="river">River/Lake</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="rainwater" id="rainwater" />
+                      <Label htmlFor="rainwater">Rainwater harvesting</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="other" id="other" />
+                      <Label htmlFor="other">Other</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
 
                 {/* Water Concerns */}
                 <div className="space-y-4">
-                  <Label className="text-sm font-medium text-gray-700">What water-related concerns do you have? (Select all that apply)</Label>
+                  <Label className="text-base font-semibold">What are your main water-related concerns? (Select all that apply)</Label>
                   <div className="grid md:grid-cols-2 gap-3">
-                    {waterConcernOptions.map((concern, index) => (
-                      <div key={index} className="flex items-center space-x-2">
+                    {waterConcernOptions.map((concern) => (
+                      <div key={concern} className="flex items-center space-x-2">
                         <Checkbox
-                          id={`concern-${index}`}
+                          id={concern}
                           checked={formData.waterConcerns.includes(concern)}
                           onCheckedChange={(checked) => handleConcernChange(concern, checked as boolean)}
                         />
-                        <Label htmlFor={`concern-${index}`} className="text-sm text-gray-700">
-                          {concern}
-                        </Label>
+                        <Label htmlFor={concern} className="text-sm">{concern}</Label>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Desalination Awareness */}
-                <div className="space-y-3">
-                  <Label className="text-sm font-medium text-gray-700">How familiar are you with desalination technology?</Label>
-                  <RadioGroup value={formData.desalinationAwareness} onValueChange={(value) => setFormData({...formData, desalinationAwareness: value})}>
+                <div className="space-y-4">
+                  <Label className="text-base font-semibold">How familiar are you with desalination technology?</Label>
+                  <RadioGroup 
+                    value={formData.desalinationAwareness} 
+                    onValueChange={(value) => setFormData({...formData, desalinationAwareness: value})}
+                  >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="very-familiar" id="very-familiar" />
                       <Label htmlFor="very-familiar">Very familiar</Label>
@@ -199,71 +228,92 @@ const Survey = () => {
                       <Label htmlFor="somewhat-familiar">Somewhat familiar</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="not-familiar" id="not-familiar" />
-                      <Label htmlFor="not-familiar">Not familiar</Label>
+                      <RadioGroupItem value="heard-of-it" id="heard-of-it" />
+                      <Label htmlFor="heard-of-it">I've heard of it</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="never-heard" id="never-heard" />
-                      <Label htmlFor="never-heard">Never heard of it</Label>
+                      <RadioGroupItem value="not-familiar" id="not-familiar" />
+                      <Label htmlFor="not-familiar">Not familiar at all</Label>
                     </div>
                   </RadioGroup>
                 </div>
 
                 {/* Willingness to Adopt */}
-                <div className="space-y-3">
-                  <Label className="text-sm font-medium text-gray-700">Would you consider using desalinated water if it were available in your area?</Label>
-                  <RadioGroup value={formData.willingness} onValueChange={(value) => setFormData({...formData, willingness: value})}>
+                <div className="space-y-4">
+                  <Label className="text-base font-semibold">Would you be willing to use desalinated water in your community?</Label>
+                  <RadioGroup 
+                    value={formData.willingness} 
+                    onValueChange={(value) => setFormData({...formData, willingness: value})}
+                  >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="definitely" id="definitely" />
-                      <Label htmlFor="definitely">Definitely yes</Label>
+                      <RadioGroupItem value="very-willing" id="very-willing" />
+                      <Label htmlFor="very-willing">Very willing</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="probably" id="probably" />
-                      <Label htmlFor="probably">Probably yes</Label>
+                      <RadioGroupItem value="willing" id="willing" />
+                      <Label htmlFor="willing">Willing if affordable</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="maybe" id="maybe" />
-                      <Label htmlFor="maybe">Maybe</Label>
+                      <RadioGroupItem value="unsure" id="unsure" />
+                      <Label htmlFor="unsure">Unsure</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="probably-not" id="probably-not" />
-                      <Label htmlFor="probably-not">Probably not</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="definitely-not" id="definitely-not" />
-                      <Label htmlFor="definitely-not">Definitely not</Label>
+                      <RadioGroupItem value="unwilling" id="unwilling" />
+                      <Label htmlFor="unwilling">Not willing</Label>
                     </div>
                   </RadioGroup>
                 </div>
 
-                {/* Additional Feedback */}
-                <div className="space-y-6">
-                  <h3 className="text-2xl font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                    Additional Feedback
-                  </h3>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="message" className="text-sm font-medium text-gray-700">
-                      Share your thoughts, suggestions, or experiences related to water access and conservation *
-                    </Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us about your water challenges, ideas for improvement, or any other feedback you'd like to share..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="min-h-32 resize-y"
-                      required
-                    />
-                  </div>
+                {/* Preferred Technology */}
+                <div className="space-y-4">
+                  <Label className="text-base font-semibold">Which water treatment technology interests you most?</Label>
+                  <RadioGroup 
+                    value={formData.preferredTechnology} 
+                    onValueChange={(value) => setFormData({...formData, preferredTechnology: value})}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="solar-desalination" id="solar-desalination" />
+                      <Label htmlFor="solar-desalination">Solar-powered desalination</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="ro-systems" id="ro-systems" />
+                      <Label htmlFor="ro-systems">Reverse Osmosis (RO) systems</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="water-recycling" id="water-recycling" />
+                      <Label htmlFor="water-recycling">Water recycling systems</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="filtration" id="filtration" />
+                      <Label htmlFor="filtration">Advanced filtration</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="unsure-tech" id="unsure-tech" />
+                      <Label htmlFor="unsure-tech">I'm not sure</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
-                
-                <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-3">
-                  Submit Survey
+
+                {/* Additional Comments */}
+                <div className="space-y-2">
+                  <Label>Additional Comments or Suggestions</Label>
+                  <Textarea
+                    placeholder="Share any additional thoughts about water challenges in your area or suggestions for solutions..."
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  />
+                </div>
+
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  disabled={loading}
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  {loading ? 'Submitting Survey...' : 'Submit Survey'}
                 </Button>
-                
-                <p className="text-sm text-gray-500 text-center">
-                  Thank you for taking the time to help us improve water access solutions worldwide.
-                </p>
               </form>
             </CardContent>
           </Card>

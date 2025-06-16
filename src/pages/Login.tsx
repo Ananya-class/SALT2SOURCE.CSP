@@ -1,45 +1,49 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User, Mail } from "lucide-react";
+import { User, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const { toast } = useToast();
+  const { signIn, user } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [errors, setErrors] = useState({
-    username: '',
+    email: '',
     password: ''
   });
 
+  // Redirect if already logged in
+  if (user) {
+    navigate('/dashboard');
+    return null;
+  }
+
   const validateForm = () => {
-    const newErrors = { username: '', password: '' };
+    const newErrors = { email: '', password: '' };
     let isValid = true;
 
-    // Username validation - must have at least one special character
-    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    if (!formData.username) {
-      newErrors.username = 'Username is required';
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
       isValid = false;
-    } else if (!specialCharRegex.test(formData.username)) {
-      newErrors.username = 'Username must contain at least one special character';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
       isValid = false;
     }
 
-    // Password validation - must be 8+ characters
     if (!formData.password) {
       newErrors.password = 'Password is required';
-      isValid = false;
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
       isValid = false;
     }
 
@@ -47,16 +51,27 @@ const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (!validateForm()) return;
+
+    setLoading(true);
+    const { error } = await signIn(formData.email, formData.password);
+    
+    if (error) {
+      toast({
+        title: "Login Failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } else {
       toast({
         title: "Login Successful!",
         description: "Welcome back to SALT2SOURCE.",
       });
-      // Simulate redirect to dashboard
-      window.location.href = '/dashboard';
+      navigate('/dashboard');
     }
+    setLoading(false);
   };
 
   return (
@@ -79,25 +94,26 @@ const Login = () => {
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Username</label>
+                  <label className="text-sm font-medium text-gray-700">Email</label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 text-gray-400" size={20} />
                     <Input
-                      placeholder="Enter your username"
-                      value={formData.username}
-                      onChange={(e) => setFormData({...formData, username: e.target.value})}
-                      className={`pl-10 transition-all duration-200 ${errors.username ? 'border-red-500 focus:border-red-500' : 'focus:border-blue-500'}`}
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className={`pl-10 transition-all duration-200 ${errors.email ? 'border-red-500 focus:border-red-500' : 'focus:border-blue-500'}`}
                     />
                   </div>
-                  {errors.username && (
-                    <p className="text-red-500 text-sm animate-fade-in">{errors.username}</p>
+                  {errors.email && (
+                    <p className="text-red-500 text-sm animate-fade-in">{errors.email}</p>
                   )}
                 </div>
                 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">Password</label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
+                    <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
                     <Input
                       type="password"
                       placeholder="Enter your password"
@@ -111,8 +127,13 @@ const Login = () => {
                   )}
                 </div>
                 
-                <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-200 hover:scale-105">
-                  Sign In
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-200 hover:scale-105"
+                  disabled={loading}
+                >
+                  {loading ? 'Signing In...' : 'Sign In'}
                 </Button>
               </form>
               
@@ -123,12 +144,6 @@ const Login = () => {
                     Sign up here
                   </Link>
                 </p>
-              </div>
-              
-              <div className="text-center">
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
-                  Forgot your password?
-                </a>
               </div>
             </CardContent>
           </Card>

@@ -9,7 +9,132 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      community_tips: {
+        Row: {
+          author_name: string
+          category: string | null
+          created_at: string
+          id: string
+          likes: number | null
+          location: string
+          tip_content: string
+          user_id: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          author_name: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          likes?: number | null
+          location: string
+          tip_content: string
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          author_name?: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          likes?: number | null
+          location?: string
+          tip_content?: string
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
+      feedback: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      survey_responses: {
+        Row: {
+          created_at: string
+          desalination_awareness: string | null
+          email: string
+          id: string
+          message: string | null
+          name: string
+          preferred_technology: string | null
+          user_id: string | null
+          water_concerns: string[] | null
+          water_source: string | null
+          willingness: string | null
+        }
+        Insert: {
+          created_at?: string
+          desalination_awareness?: string | null
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          preferred_technology?: string | null
+          user_id?: string | null
+          water_concerns?: string[] | null
+          water_source?: string | null
+          willingness?: string | null
+        }
+        Update: {
+          created_at?: string
+          desalination_awareness?: string | null
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          preferred_technology?: string | null
+          user_id?: string | null
+          water_concerns?: string[] | null
+          water_source?: string | null
+          willingness?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
