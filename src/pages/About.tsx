@@ -2,6 +2,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const About = () => {
   const teamMembers = [
@@ -35,13 +36,31 @@ const About = () => {
     }
   ];
 
-  const milestones = [
-    { year: "2020", event: "SALT2SOURCE founded with mission to solve India's water crisis through technology" },
-    { year: "2021", event: "First solar desalination pilot project launched in Gujarat coastal villages" },
-    { year: "2022", event: "Partnership with IIT Delhi for advanced water monitoring research" },
-    { year: "2023", event: "Launched community water mapping initiative across 10 Indian states" },
-    { year: "2024", event: "Reached 100+ villages with clean water access solutions" },
-    { year: "2025", event: "Advanced water analytics platform serving 500+ communities nationwide" }
+  const surveyImages = [
+    {
+      id: 1,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      title: "Community Water Access Survey",
+      description: "Documenting water accessibility challenges in rural communities and understanding daily water collection routines."
+    },
+    {
+      id: 2,
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      title: "Digital Water Mapping Initiative",
+      description: "Using technology to map water sources and create digital databases for better resource management."
+    },
+    {
+      id: 3,
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      title: "Water Quality Testing Research",
+      description: "Conducting comprehensive water quality assessments and collecting data for community health analysis."
+    },
+    {
+      id: 4,
+      image: "https://images.unsplash.com/photo-1521322800607-8c38375eef04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      title: "Home Water Conservation Study",
+      description: "Studying household water usage patterns and implementing conservation strategies in residential areas."
+    }
   ];
 
   return (
@@ -140,60 +159,53 @@ const About = () => {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="py-20 bg-blue-50">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Journey</h2>
-            <p className="text-xl text-gray-600">Key milestones in our mission to transform water access across India</p>
+      {/* Our Journey - Survey Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-green-100/20 animate-gradient-x"></div>
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-fade-in">
+            <Badge className="mb-4 bg-blue-100 text-blue-800 hover:bg-blue-200 animate-bounce-gentle">
+              Our Journey
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 animate-slide-in-left">
+              Survey & Research Collection
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed animate-slide-in-right">
+              Documenting our field research, community surveys, and data collection efforts to understand 
+              water challenges and create sustainable solutions for communities worldwide.
+            </p>
           </div>
-          
-          <div className="space-y-8">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="flex items-start space-x-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    {milestone.year}
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {surveyImages.map((item, index) => (
+              <Card 
+                key={item.id} 
+                className="group hover:shadow-2xl transition-all duration-700 hover:-translate-y-6 border-0 shadow-lg animate-scale-in overflow-hidden hover:rotate-2"
+                style={{animationDelay: `${index * 0.2}s`}}
+              >
+                <div className="relative overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+                    <Badge className="bg-white/90 text-gray-800 mb-2">
+                      Research Documentation
+                    </Badge>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <Card className="border-0 shadow-md hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <p className="text-gray-700 text-lg leading-relaxed">{milestone.event}</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Impact Statistics */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Our Impact Across India</h2>
-            <p className="text-xl opacity-90">Numbers that reflect our commitment to water-secure India</p>
-          </div>
-          
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">1.5M+</div>
-              <p className="opacity-80">Liters of Clean Water Produced Daily</p>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">500+</div>
-              <p className="opacity-80">Villages & Communities Served</p>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">12</div>
-              <p className="opacity-80">Indian States Covered</p>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">25K+</div>
-              <p className="opacity-80">Active Community Members</p>
-            </div>
           </div>
         </div>
       </section>

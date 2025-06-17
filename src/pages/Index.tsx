@@ -5,7 +5,6 @@ import { ArrowDown, Map, Droplets, Waves, Lightbulb, Sparkles, Star } from "luci
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import SurveyGallery from "@/components/SurveyGallery";
 
 const Index = () => {
   return (
@@ -48,17 +47,7 @@ const Index = () => {
           
           <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent animate-fade-in">
-              <span className="inline-block animate-bounce-gentle">S</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.1s'}}>A</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.2s'}}>L</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.3s'}}>T</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.4s'}}>2</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.5s'}}>S</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.6s'}}>O</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.7s'}}>U</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.8s'}}>R</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '0.9s'}}>C</span>
-              <span className="inline-block animate-bounce-gentle" style={{animationDelay: '1s'}}>E</span>
+              SALT2SOURCE
             </span>
           </h1>
           
@@ -174,9 +163,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Survey Gallery Section - Replacing Mission Section */}
-      <SurveyGallery />
 
       <Footer />
     </div>

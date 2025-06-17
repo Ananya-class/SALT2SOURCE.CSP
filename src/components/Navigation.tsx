@@ -1,8 +1,8 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Droplets } from "lucide-react";
-import LanguageSelector from "./LanguageSelector";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +51,6 @@ const Navigation = () => {
 
           {/* Right side items */}
           <div className="hidden md:flex items-center space-x-4">
-            <LanguageSelector />
             <div className="flex items-center space-x-2">
               <Link to="/login">
                 <Button variant="ghost" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">
@@ -67,8 +66,7 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <LanguageSelector />
+          <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition-colors"
