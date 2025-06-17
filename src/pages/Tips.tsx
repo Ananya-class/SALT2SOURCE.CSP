@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import WaterConservationTips from "@/components/WaterConservationTips";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,20 +142,21 @@ const Tips = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <Lightbulb className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+      <section className="pt-24 pb-12 px-4 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-100 to-transparent opacity-50"></div>
+        <div className="max-w-6xl mx-auto text-center relative z-10">
+          <Lightbulb className="w-16 h-16 text-blue-600 mx-auto mb-6 animate-glow" />
           <h1 className="text-5xl font-bold text-gray-800 mb-6 animate-fade-in">
             Community Water Tips
           </h1>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8 animate-slide-in-left">
             Discover practical water conservation tips from communities across India. 
             Share your own solutions and learn from others' experiences in sustainable water management.
           </p>
           
           <Button 
             size="lg" 
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 hover:scale-110 transition-all duration-300 animate-scale-in"
             onClick={() => setShowForm(!showForm)}
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -163,11 +165,14 @@ const Tips = () => {
         </div>
       </section>
 
+      {/* Water Conservation Tips Section */}
+      <WaterConservationTips />
+
       {/* Submission Form */}
       {showForm && (
         <section className="pb-12 px-4">
           <div className="max-w-2xl mx-auto">
-            <Card className="shadow-lg">
+            <Card className="shadow-lg animate-scale-in hover:shadow-xl transition-shadow duration-300">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800">Share Your Water Conservation Tip</CardTitle>
                 <CardDescription>
@@ -177,33 +182,35 @@ const Tips = () => {
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                    <div className="space-y-2 animate-slide-in-left">
                       <label className="text-sm font-medium text-gray-700">Your Name *</label>
                       <Input
                         placeholder="Enter your name"
                         value={formData.authorName}
                         onChange={(e) => setFormData({...formData, authorName: e.target.value})}
+                        className="transition-all duration-300 hover:shadow-md focus:shadow-lg"
                         required
                       />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 animate-slide-in-right">
                       <label className="text-sm font-medium text-gray-700">Location *</label>
                       <Input
                         placeholder="City, State"
                         value={formData.location}
                         onChange={(e) => setFormData({...formData, location: e.target.value})}
+                        className="transition-all duration-300 hover:shadow-md focus:shadow-lg"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 animate-fade-in">
                     <label className="text-sm font-medium text-gray-700">Category *</label>
                     <Select 
                       value={formData.category} 
                       onValueChange={(value) => setFormData({...formData, category: value})}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="transition-all duration-300 hover:shadow-md focus:shadow-lg">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
@@ -216,20 +223,21 @@ const Tips = () => {
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 animate-fade-in">
                     <label className="text-sm font-medium text-gray-700">Your Tip *</label>
                     <Textarea
                       placeholder="Share your water conservation tip, technique, or solution..."
                       rows={4}
                       value={formData.tipContent}
                       onChange={(e) => setFormData({...formData, tipContent: e.target.value})}
+                      className="transition-all duration-300 hover:shadow-md focus:shadow-lg"
                       required
                     />
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    className="w-full bg-blue-600 hover:bg-blue-700 hover:scale-105 transition-all duration-300"
                     disabled={submitLoading}
                   >
                     <Send className="w-4 h-4 mr-2" />
@@ -245,21 +253,26 @@ const Tips = () => {
       {/* Tips Display */}
       <section className="pb-20 px-4">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 animate-fade-in">Community Shared Tips</h2>
+            <p className="text-gray-600 animate-slide-in-left">Real solutions from real people making a difference</p>
+          </div>
+          
           {loading ? (
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
               <p className="mt-4 text-gray-600">Loading community tips...</p>
             </div>
           ) : tips.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-12 animate-fade-in">
               <Lightbulb className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-600 mb-2">No tips yet</h3>
               <p className="text-gray-500">Be the first to share a water conservation tip!</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {tips.map((tip) => (
-                <Card key={tip.id} className="hover:shadow-lg transition-shadow">
+              {tips.map((tip, index) => (
+                <Card key={tip.id} className="hover:shadow-lg transition-all duration-500 hover:-translate-y-2 animate-scale-in group" style={{animationDelay: `${index * 0.1}s`}}>
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start mb-3">
                       <Badge variant="secondary" className="text-xs">
@@ -272,7 +285,7 @@ const Tips = () => {
                       )}
                     </div>
                     
-                    <p className="text-gray-800 mb-4 leading-relaxed">
+                    <p className="text-gray-800 mb-4 leading-relaxed group-hover:text-gray-900 transition-colors">
                       {tip.tip_content}
                     </p>
                     
@@ -291,7 +304,7 @@ const Tips = () => {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleLike(tip.id, tip.likes)}
-                          className="text-red-500 hover:text-red-600"
+                          className="text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200"
                         >
                           <Heart className="w-4 h-4 mr-1" />
                           {tip.likes}
