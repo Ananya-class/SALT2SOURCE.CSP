@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Droplets } from "lucide-react";
+import { Menu, X, Droplets, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -47,22 +49,44 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            {user && (
+              <Link
+                to="/dashboard"
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 flex items-center space-x-2 ${
+                  isActive("/dashboard")
+                    ? "bg-blue-100 text-blue-600 shadow-md"
+                    : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                }`}
+              >
+                <User size={16} />
+                <span>Dashboard</span>
+              </Link>
+            )}
           </div>
 
           {/* Right side items */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <Link to="/login">
-                <Button variant="ghost" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">
-                  Login
+            {!user ? (
+              <div className="flex items-center space-x-2">
+                <Link to="/login">
+                  <Button variant="ghost" className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg">
+                    Join Now
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <Link to="/dashboard">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg flex items-center space-x-2">
+                  <User size={16} />
+                  <span>My Account</span>
                 </Button>
               </Link>
-              <Link to="/signup">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 shadow-lg">
-                  Join Now
-                </Button>
-              </Link>
-            </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -94,17 +118,42 @@ const Navigation = () => {
                   {link.label}
                 </Link>
               ))}
+              {user && (
+                <Link
+                  to="/dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 ${
+                    isActive("/dashboard")
+                      ? "bg-blue-100 text-blue-600"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                  }`}
+                >
+                  <User size={16} />
+                  <span>Dashboard</span>
+                </Link>
+              )}
               <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                <Link to="/login" onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-blue-600">
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/signup" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    Join Now
-                  </Button>
-                </Link>
+                {!user ? (
+                  <>
+                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                      <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-blue-600">
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to="/signup" onClick={() => setIsOpen(false)}>
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                        Join Now
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center space-x-2">
+                      <User size={16} />
+                      <span>My Account</span>
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
