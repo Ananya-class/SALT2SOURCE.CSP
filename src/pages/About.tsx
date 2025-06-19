@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,7 +30,7 @@ const About = () => {
     {
       name: "S. Nalini",
       role: "Student",
-      image: "/lovable-uploads/3b8da371-ebe4-44f5-bb46-4edc5cf65b6f",
+      image: "/lovable-uploads/3b8da371-ebe4-44f5-bb46-4edc5cf65b6f.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about environmental sustainability and community service.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     }
