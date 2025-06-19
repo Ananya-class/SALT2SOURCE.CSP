@@ -7,31 +7,31 @@ import { Badge } from "@/components/ui/badge";
 const About = () => {
   const teamMembers = [
     {
-      name: "Dr. Arjun Mehta",
-      role: "Founder & CEO",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Environmental engineer with 12+ years experience in water technology. PhD from IIT Delhi in Water Resources Engineering. Previously worked with ISRO on satellite-based water monitoring systems.",
-      expertise: "Water Technology, Satellite Monitoring, Policy Development"
+      name: "P.Ananya",
+      role: "Student Lead",
+      image: "/images/ananya.jpg",
+      bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about water conservation and sustainable technology.",
+      expertise: "Water Conservation, Community Engagement, Sustainable Technology, Technical Leadership"
     },
     {
-      name: "Priya Krishnan",
-      role: "Chief Technology Officer",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Software architect specializing in geospatial systems and IoT solutions. MS from IISc Bangalore. Led the development of India's first real-time water quality monitoring network.",
-      expertise: "IoT Systems, Geospatial Technology, Data Analytics"
+      name: "A. Sahithi Aravinda",
+      role: "Student",
+      image: "/images/sahiti.jpg",
+      bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about leveraging technology for social impact.",
+      expertise: "Community Development, Rural Outreach, Social Impact"
     },
     {
-      name: "Dr. Rajesh Gupta",
-      role: "Head of Research",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Marine scientist and desalination expert. PhD from NIOT Chennai. Published 50+ research papers on sustainable desalination technologies and their application in Indian coastal regions.",
-      expertise: "Desalination Technology, Marine Sciences, Sustainable Solutions"
+      name: "K.Uma Sree",
+      role: "Student",
+      image: "/images/uma.jpg",
+      bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about using technology to solve real-world problems.",
+      expertise: "Desalination Technology, Water Sciences, Sustainable Solutions"
     },
     {
-      name: "Kavya Sharma",
-      role: "Community Outreach Director",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      bio: "Social impact strategist with grassroots experience across rural India. MA in Development Studies from JNU. Successfully implemented water conservation programs in 200+ villages.",
+      name: "S. Nalini",
+      role: "Student",
+      image: "/images/nalini.jpg",
+      bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about environmental sustainability and community service.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     }
   ];
@@ -39,25 +39,25 @@ const About = () => {
   const surveyImages = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/images/ss.jpg",
       title: "Community Water Access Survey",
       description: "Documenting water accessibility challenges in rural communities and understanding daily water collection routines."
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      title: "Digital Water Mapping Initiative",
-      description: "Using technology to map water sources and create digital databases for better resource management."
+      image: "/images/k.jpg",
+      title: "Water Initiative Explanation",
+      description: "Explaining the details of our webpage to the people and make them easily understand the importance of water sanitation."
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/images/cm.jpg",
       title: "Water Quality Testing Research",
       description: "Conducting comprehensive water quality assessments and collecting data for community health analysis."
     },
     {
       id: 4,
-      image: "https://images.unsplash.com/photo-1521322800607-8c38375eef04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/images/home.jpg",
       title: "Home Water Conservation Study",
       description: "Studying household water usage patterns and implementing conservation strategies in residential areas."
     }
@@ -74,7 +74,7 @@ const About = () => {
             About SALT2SOURCE
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            We are a passionate team of Indian engineers, scientists, and social advocates working to solve 
+            We are a passionate team of Indian engineering students working to solve 
             India's water crisis through innovative desalination technology, community engagement, and 
             data-driven solutions tailored for Indian conditions.
           </p>
@@ -126,7 +126,7 @@ const About = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">Meet Our Team</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Passionate experts from India's leading institutions, united by a common goal: 
+              Passionate students from VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, united by a common goal: 
               solving India's water challenges with innovation and community spirit
             </p>
           </div>
