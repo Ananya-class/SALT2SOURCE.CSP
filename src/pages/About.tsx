@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,28 +8,28 @@ const About = () => {
     {
       name: "P.Ananya",
       role: "Student Lead",
-      image: "/lovable-uploads/c81b2bbb-757f-4116-bdda-002967566eae.png",
+      image: "/lovable-uploads/e53f637e-057c-4ac3-a89e-653e33a4849d.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about water conservation and sustainable technology.",
       expertise: "Water Conservation, Community Engagement, Sustainable Technology, Technical Leadership"
     },
     {
       name: "A. Sahithi Aravinda",
       role: "Student",
-      image: "/lovable-uploads/eea781a7-99f5-47fe-92fb-edcce279fbf2.png",
+      image: "/lovable-uploads/236af0f2-634b-4cce-aed8-05c6fa654ac9.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about leveraging technology for social impact.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     },
     {
       name: "K.Uma Sree",
       role: "Student",
-      image: "/lovable-uploads/48eb2015-0032-4152-9fb2-5e6867796496.png",
+      image: "/lovable-uploads/23566315-f0c4-490a-b1f4-df26140b5abc.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about using technology to solve real-world problems.",
       expertise: "Desalination Technology, Water Sciences, Sustainable Solutions"
     },
     {
       name: "S. Nalini",
       role: "Student",
-      image: "/lovable-uploads/3b8da371-ebe4-44f5-bb46-4edc5cf65b6f.png",
+      image: "/lovable-uploads/ea7dc571-0586-4fc9-84dd-eee5e343902c.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about environmental sustainability and community service.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     }
@@ -39,25 +38,25 @@ const About = () => {
   const surveyImages = [
     {
       id: 1,
-      image: "/lovable-uploads/dafcd9db-48ff-4009-bed8-a13115673070.png",
+      image: "/lovable-uploads/53b313fa-6cf4-4ab9-8165-aa83a327dcde.png",
       title: "Community Water Access Survey",
       description: "Documenting water accessibility challenges in rural communities and understanding daily water collection routines."
     },
     {
       id: 2,
-      image: "/lovable-uploads/74868a75-214e-440f-8713-5b198ed1a2e1.png",
+      image: "/lovable-uploads/d4e897bf-65c9-458d-93fd-0873787a5899.png",
       title: "Water Initiative Explanation",
       description: "Explaining the details of our webpage to the people and make them easily understand the importance of water sanitation."
     },
     {
       id: 3,
-      image: "/lovable-uploads/b0f93c6f-892a-41c8-9876-3b677c8faadd.png",
+      image: "/lovable-uploads/c17b14b7-ee39-4f6b-98f8-2dd08efbb897.png",
       title: "Water Quality Testing Research",
       description: "Conducting comprehensive water quality assessments and collecting data for community health analysis."
     },
     {
       id: 4,
-      image: "/lovable-uploads/affe5408-735d-4f20-9fc6-529ef6d0fcbd.png",
+      image: "/lovable-uploads/10385846-7155-42a3-a1ba-5f5847a6cc4a.png",
       title: "Home Water Conservation Study",
       description: "Studying household water usage patterns and implementing conservation strategies in residential areas."
     }
