@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,28 +8,28 @@ const About = () => {
     {
       name: "P.Ananya",
       role: "Student Lead",
-      image: "/images/ananya.jpg",
+      image: "/lovable-uploads/c81b2bbb-757f-4116-bdda-002967566eae.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about water conservation and sustainable technology.",
       expertise: "Water Conservation, Community Engagement, Sustainable Technology, Technical Leadership"
     },
     {
       name: "A. Sahithi Aravinda",
       role: "Student",
-      image: "/images/sahiti.jpg",
+      image: "/lovable-uploads/eea781a7-99f5-47fe-92fb-edcce279fbf2.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about leveraging technology for social impact.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     },
     {
       name: "K.Uma Sree",
       role: "Student",
-      image: "/images/uma.jpg",
+      image: "/lovable-uploads/48eb2015-0032-4152-9fb2-5e6867796496.png",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about using technology to solve real-world problems.",
       expertise: "Desalination Technology, Water Sciences, Sustainable Solutions"
     },
     {
       name: "S. Nalini",
       role: "Student",
-      image: "/images/nalini.jpg",
+      image: "/lovable-uploads/3b8da371-ebe4-44f5-bb46-4edc5cf65b6f",
       bio: "IT engineering student at VIGNAN'S INSTITUTE OF ENGINEERING FOR WOMEN, Visakhapatnam. Passionate about environmental sustainability and community service.",
       expertise: "Community Development, Rural Outreach, Social Impact"
     }
@@ -39,25 +38,25 @@ const About = () => {
   const surveyImages = [
     {
       id: 1,
-      image: "/images/ss.jpg",
+      image: "/lovable-uploads/dafcd9db-48ff-4009-bed8-a13115673070.png",
       title: "Community Water Access Survey",
       description: "Documenting water accessibility challenges in rural communities and understanding daily water collection routines."
     },
     {
       id: 2,
-      image: "/images/k.jpg",
+      image: "/lovable-uploads/74868a75-214e-440f-8713-5b198ed1a2e1.png",
       title: "Water Initiative Explanation",
       description: "Explaining the details of our webpage to the people and make them easily understand the importance of water sanitation."
     },
     {
       id: 3,
-      image: "/images/cm.jpg",
+      image: "/lovable-uploads/b0f93c6f-892a-41c8-9876-3b677c8faadd.png",
       title: "Water Quality Testing Research",
       description: "Conducting comprehensive water quality assessments and collecting data for community health analysis."
     },
     {
       id: 4,
-      image: "/images/home.jpg",
+      image: "/lovable-uploads/affe5408-735d-4f20-9fc6-529ef6d0fcbd.png",
       title: "Home Water Conservation Study",
       description: "Studying household water usage patterns and implementing conservation strategies in residential areas."
     }
